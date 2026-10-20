@@ -1,0 +1,12 @@
+# Representative ATHENA syntax used for grammar regression tests.
+go athena
+
+line x loc=0.0 spac=0.05
+line y loc=0.0 spac=0.02
+init silicon orientation=100
+deposit oxide thick=0.02
+etch oxide left p1.x=0.5
+implant boron dose=1e13 energy=50
+diffuse time=30 temp=1000
+structure outfile="athena-smoke.str"
+quit

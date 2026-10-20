@@ -1,0 +1,273 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Silvaco DeckBuild",
+  "scopeName": "source.silvaco",
+  "patterns": [
+    { "include": "#strings" },
+    { "include": "#comments" },
+    { "include": "#line-continuation" },
+    { "include": "#go-simulator" },
+    { "include": "#models-statement" },
+    { "include": "#doping-statement" },
+    { "include": "#deckbuild-commands" },
+    { "include": "#process-commands" },
+    { "include": "#device-commands" },
+    { "include": "#victoryprocess-commands" },
+    { "include": "#victorydevice-commands" },
+    { "include": "#victorymesh-commands" },
+    { "include": "#materials" },
+    { "include": "#dopants" },
+    { "include": "#physical-models" },
+    { "include": "#extract-functions" },
+    { "include": "#booleans" },
+    { "include": "#variables" },
+    { "include": "#parameters" },
+    { "include": "#numbers" },
+    { "include": "#units" },
+    { "include": "#operators" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.silvaco",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.silvaco",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.silvaco",
+              "match": "\\\\."
+            },
+            { "include": "#variables" }
+          ]
+        },
+        {
+          "name": "string.quoted.single.silvaco",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.silvaco",
+              "match": "\\\\."
+            },
+            { "include": "#variables" }
+          ]
+        }
+      ]
+    },
+    "line-continuation": {
+      "patterns": [
+        {
+          "name": "constant.character.escape.line-continuation.silvaco",
+          "match": "\\\\\\s*$"
+        }
+      ]
+    },
+    "go-simulator": {
+      "patterns": [
+        {
+          "match": "(?i:\\b(go|gofast)\\s+(atlas|athena|victoryprocess|victorydevice|victorymesh|victorycell|victorystress|victoryatomistic|devedit3d)\\b)",
+          "captures": {
+            "1": { "name": "keyword.control.deckbuild.silvaco" },
+            "2": { "name": "entity.name.type.simulator.silvaco" }
+          }
+        }
+      ]
+    },
+    "models-statement": {
+      "patterns": [
+        {
+          "begin": "(?i:^\\s*(models?)\\b)",
+          "beginCaptures": {
+            "1": { "name": "keyword.command.device.silvaco" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#strings" },
+            { "include": "#comments" },
+            { "include": "#physical-models" },
+            { "include": "#booleans" },
+            { "include": "#parameters" },
+            { "include": "#numbers" },
+            { "include": "#line-continuation" }
+          ]
+        }
+      ]
+    },
+    "doping-statement": {
+      "patterns": [
+        {
+          "begin": "(?i:^\\s*(doping)\\b)",
+          "beginCaptures": {
+            "1": { "name": "keyword.command.device.silvaco" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#strings" },
+            { "include": "#comments" },
+            { "include": "#dopants" },
+            { "include": "#materials" },
+            {
+              "name": "storage.modifier.profile.silvaco",
+              "match": "(?i:\\b(?:uniform|gaussian|erfc|ascii|master)\\b)"
+            },
+            { "include": "#parameters" },
+            { "include": "#numbers" },
+            { "include": "#line-continuation" }
+          ]
+        }
+      ]
+    },
+    "deckbuild-commands": {
+      "patterns": [
+        {
+          "name": "keyword.control.deckbuild.silvaco",
+          "match": "(?i:\\b(?:extract|set|tonyplot|tonyplot3d|victoryvisual|system|source|quit|exit|help|save|load|log)\\b)"
+        }
+      ]
+    },
+    "process-commands": {
+      "patterns": [
+        {
+          "name": "keyword.command.process.silvaco",
+          "match": "(?i:\\b(?:line|init|initialize|deposit|etch|diffuse|implant|structure|electrode|strip|reflect|stretch|adapt|method|material|rate|profile|epitaxy|anneal|oxidize|polish|expose|develop|mask|photoresist|lithography)\\b)"
+        }
+      ]
+    },
+    "device-commands": {
+      "patterns": [
+        {
+          "name": "keyword.command.device.silvaco",
+          "match": "(?i:\\b(?:mesh|x\\.mesh|y\\.mesh|z\\.mesh|region|material|electrode|doping|models?|contact|interface|method|solve|probe|output|beam|impact|mobility|thermcontact)\\b)"
+        }
+      ]
+    },
+    "victoryprocess-commands": {
+      "patterns": [
+        {
+          "name": "keyword.command.victoryprocess.silvaco",
+          "match": "(?i:\\b(?:levelset|montecarlo|kinetic|grain|crystallization|amorphize|recrystallization|damage|defect|strain|grow|nucleation|contour|isosurface|sputter|evaporate|rie|drie|icp|bosch|wetetch|dryetch|spincoat|softbake|postbake|cure|planarize|cmp)\\b)"
+        }
+      ]
+    },
+    "victorydevice-commands": {
+      "patterns": [
+        {
+          "name": "keyword.command.victorydevice.silvaco",
+          "match": "(?i:\\b(?:poisson|schrodinger|negf|laser|led|photodiode|solarcell|waveguide|spectrum|reliability|breakdown|latticetemp|thermalcontact)\\b)"
+        }
+      ]
+    },
+    "victorymesh-commands": {
+      "patterns": [
+        {
+          "name": "keyword.command.victorymesh.silvaco",
+          "match": "(?i:\\b(?:refine|smooth|surface|boundary|constraint|conformal|extrude|revolve|sweep|transform|merge|submesh|automesh|remesh|quality|optimize|coarsen)\\b)"
+        }
+      ]
+    },
+    "materials": {
+      "patterns": [
+        {
+          "name": "support.type.material.silvaco",
+          "match": "(?i:\\b(?:silicon|polysilicon|oxide|nitride|oxynitride|sio2|si3n4|al2o3|hfo2|zro2|aluminum|copper|tungsten|titanium|cobalt|nickel|gold|silver|gaas|algaas|ingaas|inp|gan|algan|ingan|sic|sige|germanium|diamond|photoresist|air|vacuum|sapphire|quartz)\\b)"
+        }
+      ]
+    },
+    "dopants": {
+      "patterns": [
+        {
+          "name": "support.type.dopant.silvaco",
+          "match": "(?i:\\b(?:boron|phosphorus|arsenic|antimony|indium|beryllium|magnesium|n\\.type|p\\.type|n-type|p-type|ntype|ptype)\\b)"
+        }
+      ]
+    },
+    "physical-models": {
+      "patterns": [
+        {
+          "name": "support.function.model.silvaco",
+          "match": "(?i:\\b(?:srh|consrh|auger|bgn|conmob|commob|fldmob|cvt|analytic|arora|canali|lombardi|fermi|boltzmann|impact|selb|bbt|btbt|fowler|nordheim|trap|tunnel|ddm|ebm|hdm|bqp\\.n|lat\\.temp|print)\\b)"
+        }
+      ]
+    },
+    "extract-functions": {
+      "patterns": [
+        {
+          "name": "support.function.extract.silvaco",
+          "match": "(?i:\\b(?:curve|maxslope|minslope|slope|xintercept|yintercept|max|min|ave|abs|log10|sqrt|area|integral|grad|thickness)\\b)"
+        }
+      ]
+    },
+    "booleans": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.silvaco",
+          "match": "(?i:\\b(?:true|false|yes|no|on|off)\\b)"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.deckbuild.silvaco",
+          "match": "\\$\\{?[A-Za-z_][A-Za-z0-9_]*\\}?"
+        }
+      ]
+    },
+    "parameters": {
+      "patterns": [
+        {
+          "match": "\\b([A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)\\s*(=)",
+          "captures": {
+            "1": { "name": "variable.parameter.silvaco" },
+            "2": { "name": "keyword.operator.assignment.silvaco" }
+          }
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.silvaco",
+          "match": "(?<![A-Za-z0-9_.])[-+]?(?:(?:[0-9]+\\.[0-9]*)|(?:\\.[0-9]+))(?:[eE][-+]?[0-9]+)?(?![A-Za-z0-9_.])"
+        },
+        {
+          "name": "constant.numeric.scientific.silvaco",
+          "match": "(?<![A-Za-z0-9_.])[-+]?[0-9]+[eE][-+]?[0-9]+(?![A-Za-z0-9_.])"
+        },
+        {
+          "name": "constant.numeric.integer.silvaco",
+          "match": "(?<![A-Za-z0-9_.])[-+]?[0-9]+(?![A-Za-z0-9_.])"
+        }
+      ]
+    },
+    "units": {
+      "patterns": [
+        {
+          "name": "keyword.other.unit.silvaco",
+          "match": "(?i:\\b(?:angstrom|um|nm|cm|mm|ev|kev|mev|mv|kv|ms|us|ns|ps|hz|khz|mhz|ghz|thz|degc|ohm|kohm|mohm|ma|ua|na|mw|uw|nw|torr|pa|atm|bar|sccm|rpm)\\b)"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.silvaco",
+          "match": "==|!=|<=|>="
+        },
+        {
+          "name": "keyword.operator.arithmetic.silvaco",
+          "match": "[+*/^-]"
+        }
+      ]
+    }
+  }
+}

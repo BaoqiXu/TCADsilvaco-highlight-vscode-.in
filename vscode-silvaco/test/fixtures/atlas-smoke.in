@@ -1,0 +1,16 @@
+# Representative ATLAS syntax used for grammar regression tests.
+go atlas
+
+mesh space.mult=1.0
+x.mesh loc=0.0 spac=0.1
+y.mesh loc=0.0 spac=0.02
+region num=1 material=Silicon
+electrode name=gate top
+doping uniform p.type conc=1e16
+models srh fldmob print
+method newton maxtraps=10
+solve init
+log outf="atlas-smoke.log"
+solve vgate=0 vstep=0.1 vfinal=1.0 name=gate
+save outf="atlas-smoke.str"
+quit

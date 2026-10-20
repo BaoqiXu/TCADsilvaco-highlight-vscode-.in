@@ -1,0 +1,66 @@
+{
+  "name": "silvaco-deckbuild",
+  "displayName": "Silvaco DeckBuild Syntax Highlighting (Unofficial)",
+  "description": "Lightweight syntax highlighting and basic editing support for Silvaco TCAD .in and .deck files.",
+  "version": "0.4.0",
+  "publisher": "babyqi",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "silvaco",
+    "deckbuild",
+    "tcad",
+    "semiconductor",
+    "atlas",
+    "athena",
+    "victory",
+    "syntax highlighting"
+  ],
+  "icon": "icon.png",
+  "scripts": {
+    "test": "node --test",
+    "test:grammar": "node --test test/grammar.test.js",
+    "package": "vsce package --no-dependencies --allow-missing-repository --no-rewrite-relative-links"
+  },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "silvaco",
+        "aliases": [
+          "Silvaco DeckBuild",
+          "silvaco",
+          "deckbuild"
+        ],
+        "extensions": [
+          ".in",
+          ".deck"
+        ],
+        "firstLine": "^\\s*(?:go\\s+(?:atlas|athena|victoryprocess|victorydevice|victorymesh)|#.*(?:silvaco|deckbuild))\\b",
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "silvaco",
+        "scopeName": "source.silvaco",
+        "path": "./syntaxes/silvaco.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.9.2",
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.3.2"
+  }
+}

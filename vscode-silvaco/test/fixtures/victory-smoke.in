@@ -1,0 +1,10 @@
+# Representative Victory syntax used for grammar regression tests.
+go victorymesh
+
+surface name=top material=Silicon
+refine region=channel max.size=0.01
+constraint conformal=yes
+extrude direction=z length=1.0 layers=20
+optimize quality max.aspect=10
+save outf="victory-smoke.str"
+quit
